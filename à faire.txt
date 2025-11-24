@@ -1,0 +1,9 @@
+Utiliser Composer
+
+-> autoloading, namespace : App->src
+
+->installer les dépendances "climate"
+
+Utiliser git/GitHub
+
+-> développer avec des branches 
