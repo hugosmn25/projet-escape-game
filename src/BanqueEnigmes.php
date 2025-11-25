@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Enigme;
+use App\Salle;
+
 /**
  * Classe gérant une banque d'énigmes.
  * Permet de stocker un grand nombre d'énigmes et de sélectionner aléatoirement
@@ -77,6 +80,10 @@ class BanqueEnigmes {
         ];
     }
 
+    public function ajouterEnigme (Enigme $enigme){
+        $this->enigmes[] =$enigme;
+    }
+
     /**
      * Sélectionne aléatoirement un nombre d'énigmes différentes.
      * 
@@ -84,8 +91,12 @@ class BanqueEnigmes {
      * @return Enigme[] Tableau d'énigmes sélectionnées
      * @throws \Exception Si le nombre demandé est supérieur au nombre d'énigmes disponibles
      */
-    public function selectionnerEnigmesAleatoires(int $nombre): array {
-        // TODO
+    public function getEnigmesAleatoires($enigmes): array {
+        return array_rand($this->enigmes, $enigmes);
+        foreach ($valeurs as $valeur) {
+            $selectionnees[] = $this->enigmes[$valeur];
+        }
+        return $selectionnees;
     }
 
     /**
