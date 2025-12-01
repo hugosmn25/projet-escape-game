@@ -6,6 +6,7 @@ use App\Salle;
 use App\Enigme;
 use App\SessionJeu;
 use App\BanqueEnigmes;
+use App\Timer;
 
 // Petite fonction compatible Windows/Mac/Linux
 function input(string $msg): string {
@@ -30,6 +31,10 @@ echo "\nCréation de la salle...\n";
 // ------------------------------------------------------
 
 $salle = new Salle("La Chambre du Codex");
+$nomSalle = "La Chambre du Codex";
+
+$timer = new Timer();
+$timer->start();
 
 // Création de la banque d'énigmes avec 50 énigmes
 $banqueEnigmes = new BanqueEnigmes();
@@ -55,7 +60,7 @@ echo "       Lancement de la session de jeu\n";
 echo "-------------------------------------------\n\n";
 
 echo "Équipe : $nomEquipe\n";
-echo "Salle  : \"" . $salle->getNom() . "\"\n\n";
+echo "Salle  :  $nomSalle \n";
 
 // ------------------------------------------------------
 // 4. Boucle principale du jeu
@@ -71,7 +76,7 @@ while (!$session->estTerminee()) {
 
     $reponse = input("Votre réponse : >> ");
 
-    if ($session->repondreAEnigme($reponse)) {
+    if ($session->repondreAEnigme($reponse, $session->getNombreTentatives())) {
         echo "\n✔ Bonne réponse !\n";
         echo "→ Passage à l’énigme suivante…\n\n";
     } else {
@@ -79,6 +84,8 @@ while (!$session->estTerminee()) {
         echo "Indice : " . $session->getEnigmeEnCours()->getIndice() . "\n\n";
     }
 }
+
+$timer->stop();
 
 
 // ------------------------------------------------------
@@ -95,6 +102,7 @@ $enigmesResolues = $salle->getNombreEnigmes();
 echo "✔ Énigmes résolues : $enigmesResolues / $enigmesResolues\n";
 echo "✔ Nombre total de tentatives : " . $session->getNombreTentatives() . "\n";
 echo "✔ Bravo, vous avez terminé la salle !\n\n";
+echo "✔ Durée totale : " . $timer->getDureeFormatee() . "\n\n";
 
 echo "===========================================\n";
 echo "        MERCI D’AVOIR JOUÉ AVEC NOUS !\n";

@@ -91,11 +91,30 @@ class BanqueEnigmes {
      * @return Enigme[] Tableau d'énigmes sélectionnées
      * @throws \Exception Si le nombre demandé est supérieur au nombre d'énigmes disponibles
      */
-    public function getEnigmesAleatoires($enigmes): array {
-        return array_rand($this->enigmes, $enigmes);
-        foreach ($valeurs as $valeur) {
-            $selectionnees[] = $this->enigmes[$valeur];
+    public function getEnigmesAleatoires(int $nombre): array {
+        $total = count($this->enigmes);
+        if ($nombre <= 0) {
+            return [];
         }
+        if ($nombre > $total) {
+            throw new \Exception("Nombre demandé ($nombre) supérieur au nombre d'énigmes disponibles ($total).");
+        }
+
+        // array_rand retourne une clé ou un tableau de clés
+        $keys = array_rand($this->enigmes, $nombre);
+
+        $selectionnees = [];
+
+        if ($nombre === 1) {
+            // array_rand renvoie une seule clé (int)
+            $selectionnees[] = $this->enigmes[$keys];
+        } else {
+            // $keys est un tableau de clés
+            foreach ($keys as $k) {
+                $selectionnees[] = $this->enigmes[$k];
+            }
+        }
+
         return $selectionnees;
     }
 

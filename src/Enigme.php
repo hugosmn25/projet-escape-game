@@ -15,11 +15,19 @@ class Enigme{
         $this->estResolue = false;
     }
 
+    /**
+     * Vérifie la réponse fournie par l'utilisateur.
+     * La comparaison est insensible à la casse et ignore les espaces de début/fin.
+     */
     public function verifierReponse(string $reponse): bool{
-        if($reponse === $this->reponseAttendue){
+        // Normalisation : trim + minuscules multi-octets pour gérer les majuscules.
+        $reponseNorm = mb_strtolower(trim($reponse), 'UTF-8');
+        $attendueNorm = mb_strtolower(trim($this->reponseAttendue), 'UTF-8');
+
+        if($reponseNorm === $attendueNorm){
             $this->estResolue = true;
             return true;
-        }else {
+        } else {
             $this->estResolue = false;
             return false;
         }
